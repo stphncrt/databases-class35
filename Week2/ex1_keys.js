@@ -25,7 +25,7 @@ const seedDatabase = async() => {
         ALTER TABLE authors ADD mentor INT;
         `;
     const ADD_FOREIGN_KEY_AUTHORS_TABLE = `
-        ALTER TABLE authors ADD FOREIGN KEY(mentor) REFERENCES authors(author_no)  ;
+        ALTER TABLE authors ADD FOREIGN KEY(mentor) REFERENCES authors(author_no);
     `;
     connection.connect()
 
