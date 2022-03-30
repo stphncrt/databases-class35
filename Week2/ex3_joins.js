@@ -1,6 +1,6 @@
 import { createConnection } from 'mysql';
 
-const connection = mysql.createConnection({
+const connection = createConnection({
     host: 'localhost',
     user: 'hyfuser',
     password: 'hyfpassword',
@@ -12,7 +12,7 @@ connection.connect();
 const execQuery = (query) => {
     connection.query(query, (err, result) => {
         if (err) throw err;
-        console.log(result);
+        else console.table(result);
     });
 };
 
@@ -29,7 +29,6 @@ const PRINT_ALL_AUTHORS_COLUMNS_AND_PAPER_TITLE = `
   ON auth_res_papers.paper_id = research_Papers.paper_id;
 `;
 
-connection.connect();
 
 execQuery(PRINT_ALL_AUTHORS_AND_MENTORS);
 execQuery(PRINT_ALL_AUTHORS_COLUMNS_AND_PAPER_TITLE);

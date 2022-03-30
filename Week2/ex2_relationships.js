@@ -22,12 +22,15 @@ const seedDatabase = async() => {
     const CREATE_AUTHORS_RESEARCH_PAPERS_TABLE = `
       CREATE TABLE IF NOT EXISTS auth_res_papers(
         id INT PRIMARY KEY,
-        author_no INT FOREIGN KEY REFERENCES authors(author_no),
-        paper_id INT FOREIGN KEY REFERENCES research_Papers(paper_id)
+        author_no INT,
+        paper_id INT,
+        FOREIGN KEY(paper_id) REFERENCES research_Papers(paper_id),
+        FOREIGN KEY(author_no) REFERENCES authors(author_no)
       );`;
 
     const INSERT_AUTHORS = `
-        INSERT INTO authors VALUES
+    INSERT INTO authors 
+    VALUES
         (001,'Hofstede','University of Amsterdam', '1980-01-01',100,'m',002),
         (002,'Anna','University of Istanbul', '1985-01-01',140,'f',003),
         (003,'Jack','MIT', '1990-01-01',103,'m',004),
@@ -68,7 +71,7 @@ const seedDatabase = async() => {
         (119,'VSCode', 'VSCode Conference', '2015-01-19'),
         (120,'Material', 'Material Conference', '2015-01-20'),
         (121,'Ant_design', 'Ant_design Conference', '2015-01-21'),
-        (122,'Bootstrap','Bootstrap Conference', '2015-01-22),
+        (122,'Bootstrap','Bootstrap Conference', '2015-01-22'),
         (123,'Webkit','Webkit Conference', '2015-01-23'),
         (124,'Php','Php Conference', '2015-01-24'),
         (125,'UX', 'UX Conference', '2015-01-25'),
@@ -79,7 +82,7 @@ const seedDatabase = async() => {
         (130,'Scrum','Scrum Conference', '2015-01-30')
     `;
     const INSERT_AUTH_RES_PAPERS = `
-        INSERT INTO auth_res_papers VALUES EXISTS
+        INSERT INTO auth_res_papers VALUES
         (1, 001, 101),
         (2, 001, 102),
         (3, 001, 103),
@@ -116,6 +119,7 @@ const seedDatabase = async() => {
     try {
         await execQuery(CREATE_RESEARCH_PAPERS_TABLE);
         await execQuery(CREATE_AUTHORS_RESEARCH_PAPERS_TABLE);
+        await execQuery(CANCEL_FK_CHECK);
         await execQuery(INSERT_AUTHORS);
         await execQuery(INSERT_RESEARCH_PAPERS);
         await execQuery(INSERT_AUTH_RES_PAPERS);

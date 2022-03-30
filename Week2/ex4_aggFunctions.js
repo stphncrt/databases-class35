@@ -10,7 +10,7 @@ const connection = createConnection({
 const execQuery = (query) => {
     connection.query(query, (err, result) => {
         if (err) throw err;
-        console.log(result);
+        else console.table(result);
     })
 }
 
@@ -27,19 +27,19 @@ const PRINT_ALL_RESEARCH_PAPERS_AND_NUMBER_OF_AUTHORS = `
 const PRINT_RESEARCH_PAPERS_PUBLISHED_BY_FEMALES = `
   SELECT COUNT(auth_res_papers.paper_id) FROM authors
   INNER JOIN auth_res_papers
-  ON auth_res_papers.author_no = author.author_no 
+  ON auth_res_papers.author_no = authors.author_no 
   GROUP BY gender
   HAVING gender = 'f';
 `;
 
 const PRINT_AVE_OF_H_INDEX_AUTHORS = `
-  SELECT university AS University, AVG(h_index) AS Avarege of h_index
+  SELECT university AS University, AVG(h_index) AS 'Average of h_index'
   FROM authors
   GROUP BY university;
 `;
 
 const PRINT_SUM_RES_PAPERS_AUTHORS_PER_UNIVERSITY = `
-  SELECT university, COUNT(auth_res_papers.paper_id) AS Sum_of_Research_Papers
+  SELECT university, COUNT(auth_res_papers.paper_id) AS 'Sum_of_Research_Papers'
   FROM authors 
   INNER JOIN auth_res_papers
   ON auth_res_papers.author_no = authors.author_no
@@ -47,7 +47,7 @@ const PRINT_SUM_RES_PAPERS_AUTHORS_PER_UNIVERSITY = `
 `;
 
 const MIN_MAX_H_INDEX_OF_AUTHORS_PER_UNIVERSITY = `
-  SELECT university, MIN(h_index) AS Min h_index, MAX(h_index) AS Max h_index
+  SELECT university, MIN(h_index) AS 'Min h_index', MAX(h_index) AS 'Max h_index'
   FROM authors
   GROUP BY university;
 `;
