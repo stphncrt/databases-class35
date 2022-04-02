@@ -1,12 +1,12 @@
-import util from 'util';
-import mysql from 'mysql';
+import util from "util";
+import mysql from "mysql";
 
 const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'hyfuser',
-    password: 'hyfpassword',
-    database: 'bookdb',
-})
+    host: "localhost",
+    user: "hyfuser",
+    password: "hyfpassword",
+    database: "bookdb",
+});
 
 const execQuery = util.promisify(connection.query.bind(connection));
 
@@ -18,7 +18,7 @@ const seedDatabase = async() => {
       conference TEXT,
       publish_date DATE
     );`;
-
+    const CANCEL_FK_CHECK = "SET FOREIGN_KEY_CHECKS = 0;";
     const CREATE_AUTHORS_RESEARCH_PAPERS_TABLE = `
       CREATE TABLE IF NOT EXISTS auth_res_papers(
         id INT PRIMARY KEY,
@@ -35,17 +35,17 @@ const seedDatabase = async() => {
         (002,'Anna','University of Istanbul', '1985-01-01',140,'f',003),
         (003,'Jack','MIT', '1990-01-01',103,'m',004),
         (004,'John','University of Amsterdam', '1983-01-11',107,'m',005),
-        (005,'Jackline','University of Amsterdam', '1992-03-01',50,'f',002),
+        (005,'Jackline','University of Amsterdam', '1992-03-01',50,'f',006),
         (006,'Caroline','University of Madrid', '1998-05-01',155,'f',007),
-        (007,'Mahmut','University of Urfa', '1987-04-11',13,'m',006),
+        (007,'Mahmut','University of Urfa', '1987-04-11',13,'m',008),
         (008,'Ilber','Mektebi Sultani', '1999-02-21',1040,'m',009),
-        (009,'Celal','Newyork University', '2000-01-01',80,'m',008),
+        (009,'Celal','Newyork University', '2000-01-01',80,'m',010),
         (010,'Anderson','Stockholm University', '2005-01-01',145,'m',011),
         (011,'Mary','Newyork University', '2000-01-01',124,'f',012),
         (012,'Hannah','Delft University', '2012-01-01',77,'f',013),
-        (013,'Dilek','Maastricht University', '2013-01-01',20,'f',013),
+        (013,'Dilek','Maastricht University', '2013-01-01',20,'f',014),
         (014,'Diva','Nova University', '2016-05-01',100,'f',015),
-        (015,'Beatriz','University of Lisbon', '2018-01-01',178,'f',014)       
+        (015,'Beatriz','University of Lisbon', '2018-01-01',178,'f',001)       
     `;
 
     const INSERT_RESEARCH_PAPERS = `
@@ -123,7 +123,6 @@ const seedDatabase = async() => {
         await execQuery(INSERT_AUTHORS);
         await execQuery(INSERT_RESEARCH_PAPERS);
         await execQuery(INSERT_AUTH_RES_PAPERS);
-
     } catch (err) {
         console.log(err);
         connection.end();
