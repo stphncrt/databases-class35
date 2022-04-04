@@ -1,18 +1,18 @@
-import { createConnection } from 'mysql';
+import { createConnection } from "mysql";
 
 const connection = createConnection({
-    host: 'localhost',
-    user: 'hyfuser',
-    password: 'hyfpassword',
-    database: 'bookdb'
-})
+	host: "localhost",
+	user: "hyfuser",
+	password: "hyfpassword",
+	database: "bookdb",
+});
 
 const execQuery = (query) => {
-    connection.query(query, (err, result) => {
-        if (err) throw err;
-        else console.table(result);
-    })
-}
+	connection.query(query, (err, result) => {
+		if (err) throw err;
+		else console.table(result);
+	});
+};
 
 connection.connect();
 
