@@ -10,7 +10,9 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "mongodb": "^4.5.0",
         "mysql": "^2.18.1",
+        "prompt": "^1.2.2",
         "util": "^0.12.4"
     }
 }

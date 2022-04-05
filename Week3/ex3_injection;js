@@ -1,0 +1,58 @@
+import prompt from "promt";
+import util from "util";
+import { createConnection } from "mysql";
+
+const connection = createConnection({
+	host: "localhost",
+	user: "hyfuser",
+	password: "hyfpassword",
+	database: "world",
+	multipleStatements: true,
+});
+
+const input = util.promisify(prompt.get.bind(this));
+
+function getPopulation(Country, name, code, cb) {
+	connection.query(
+		`SELECT Population FROM ${Country} WHERE Name =` +
+			connection.escape(name) +
+			" and code =" +
+			connection.escape(code),
+		function (error, result) {
+			if (error) cb(error);
+			if (result.length == 0) cb(new Error("Not found"));
+			cb(null, result);
+		},
+	);
+}
+
+function cb(error, result) {
+	if (error) {
+		console.log(error.message);
+		return;
+	}
+	console.log(result);
+}
+async function queryDatabase() {
+	let country = "";
+	let name = "";
+	let code = "";
+	prompt.start();
+
+	try {
+		const value1 = await input(["country"]);
+		const value2 = await input(["name"]);
+		const value3 = await input(["code"]);
+		country = value1.country;
+		name = value2.name;
+		code = value3.code;
+
+		connection.connect();
+		getPopulation(country, name, code, cb);
+	} catch (error) {
+		console.error(error);
+	}
+
+	connection.end();
+}
+queryDatabase();
