@@ -17,7 +17,7 @@ const transferMoney = async () => {
 	const AUTO_COMMIT_ON = `SET AUTOCOMMIT = 1;`;
 	const CANCEL_FK_CHECK = `SET FOREIGN_KEY_CHECKS = 0;`;
 	const UPDATE_ACCOUNT = `UPDATE account SET balance  = 4900 WHERE account_number = 101;`;
-	const INSERT_TRANSFER = `INSERT INTO account_changes VALUES(2, 101, 100, '2022-04-05', 'money transfer successfully');`;
+	const INSERT_TRANSFER = `INSERT INTO account_changes VALUES(2, 101, 100, NOW(), 'money transfer successfully');`;
 	connection.connect();
 	try {
 		await execQuery(AUTO_COMMIT_OFF);
